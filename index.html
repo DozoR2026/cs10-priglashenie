@@ -202,6 +202,15 @@
       min-height: 1.1em;
     }
     .cover .where { max-width: 1680px; text-align: center; line-height: 1.15; }
+    .qr-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .v2 .qr-stack .qrbox img { width: 156px; height: 156px; }
+    .v2 .qr-stack .pass-cap { margin-top: 6px; font-size: 16px; }
+    .v2 .qr-stack .pass-cap span { margin-top: 2px; font-size: 15px; }
     @media (max-width: 720px) {
       h1.app-title { font-size: 30px; }
       .actions { flex-direction: column; }
@@ -358,9 +367,15 @@
                     <div class="pass-kicker">отрывной купон</div>
                     <div class="pass-title">ПРОПУСК</div>
                   </div>
-                  <div>
-                    <div class="qrbox"><img src="qr.png" alt="Маршрут до клуба в 2ГИС"></div>
-                    <div class="pass-cap">СКАНИРУЙ<span>маршрут в 2ГИС</span></div>
+                  <div class="qr-stack">
+                    <div>
+                      <div class="qrbox"><img src="qr-pamyatka.png" alt="Памятка для родителей"></div>
+                      <div class="pass-cap">СКАНИРУЙ<span>памятка родителям</span></div>
+                    </div>
+                    <div>
+                      <div class="qrbox"><img src="qr.png" alt="Маршрут до клуба в 2ГИС"></div>
+                      <div class="pass-cap">СКАНИРУЙ<span>маршрут в 2ГИС</span></div>
+                    </div>
                   </div>
                   <div class="pass-meta">ул. Балтийская, 14<small>ангар 16 · Петрозаводск</small></div>
                 </div>
