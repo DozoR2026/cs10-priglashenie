@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Приглашение на день рождения — Контр-Страйк</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    html, body {
+      width: auto;
+      height: auto;
+      min-height: 100vh;
+      overflow: auto;
+      background: #111;
+      color: #f4f4f4;
+      font-family: "Oswald", sans-serif;
+    }
+    .app {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .top img { height: 48px; width: auto; }
+    h1.app-title {
+      margin: 0 0 16px;
+      font-size: 40px;
+      line-height: 1.05;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-shadow: none;
+      transform: none;
+    }
+    .guide {
+      border: 3px solid #f2c400;
+      background: #181818;
+      padding: 16px 16px 4px;
+      margin-bottom: 22px;
+    }
+    .guide h2 {
+      margin: 0 0 12px;
+      color: #f2c400;
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-shadow: none;
+      transform: none;
+    }
+    .guide ol { list-style: none; margin: 0; padding: 0; }
+    .guide li {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+    .num {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f2c400;
+      color: #161616;
+      font-weight: 700;
+      font-size: 22px;
+    }
+    .guide strong {
+      display: block;
+      font-size: 20px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .guide p {
+      margin: 3px 0 0;
+      color: #ececec;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0.01em;
+      text-transform: none;
+    }
+    .fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .wide { grid-column: 1 / -1; }
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f2c400;
+    }
+    input, textarea {
+      border: 0;
+      border-bottom: 3px solid #f2c400;
+      background: #1c1c1c;
+      color: #fff;
+      font-family: "Oswald", sans-serif;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 1.35;
+      padding: 10px 12px;
+    }
+    input { height: 52px; }
+    textarea { min-height: 180px; resize: vertical; }
+    input:focus, textarea:focus { outline: 2px solid #f2c400; }
+    .count { color: #bdbdbd; font-size: 16px; letter-spacing: 0.03em; text-transform: none; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    button {
+      height: 50px;
+      border: 0;
+      background: #f2c400;
+      color: #161616;
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0 18px;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.55; cursor: wait; }
+    button.ghost { background: transparent; color: #f2c400; border: 2px solid #f2c400; }
+    .status { min-height: 26px; margin: 12px 0; color: #f2c400; font-size: 18px; }
+    .done-note {
+      margin: 8px 0 16px;
+      color: #ececec;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+    .preview-title {
+      margin: 8px 0;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #f2c400;
+      text-shadow: none;
+      transform: none;
+    }
+    .guest-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 22px;
+    }
+    .frame {
+      width: 100%;
+      overflow: hidden;
+      background: #000;
+      line-height: 0;
+    }
+    .frame .stage {
+      transform-origin: top left;
+      line-height: normal;
+    }
+    .pass-lockup {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: 0 0 auto;
+    }
+    .pass-lockup .hand { margin: 8px 0 2px 8px; line-height: 1; }
+    .pass-lockup h1 { line-height: 0.9; }
+    .pass-lockup h2 { line-height: 0.92; }
+    .fill {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1;
+      color: #1a1a1a;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .v2 .bar, .bar {
+      display: flex;
+      align-items: center;
+      padding: 0 40px 0 36px;
+    }
+    .cover .person {
+      margin: 2px 0 0;
+      color: #fff;
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 42px;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      text-shadow: 3px 3px 0 #000;
+      transform: skewX(-8deg);
+      min-height: 1.1em;
+    }
+    .cover .where { max-width: 1680px; text-align: center; line-height: 1.15; }
+    @media (max-width: 720px) {
+      h1.app-title { font-size: 30px; }
+      .actions { flex-direction: column; }
+      .fields, .guest-head { grid-template-columns: 1fr; display: grid; }
+      .guest-head { align-items: stretch; }
+      button, .actions button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="top">
+      <img src="logo.png" alt="Контр-Страйк">
+    </div>
+    <h1 class="app-title">Приглашения на день рождения</h1>
+
+    <section class="guide">
+      <h2>Что сделать</h2>
+      <ol>
+        <li>
+          <div class="num">1</div>
+          <div>
+            <strong>Заполните форму</strong>
+            <p>Укажите дату и время праздника, имя именинника и всех гостей. Каждого гостя пишите с новой строки.</p>
+          </div>
+        </li>
+        <li>
+          <div class="num">2</div>
+          <div>
+            <strong>Нажмите «Сделать приглашения»</strong>
+            <p>Появится одна общая лицевая сторона и отдельный пропуск на каждого гостя — уже с его именем.</p>
+          </div>
+        </li>
+        <li>
+          <div class="num">3</div>
+          <div>
+            <strong>Скачайте и отправьте</strong>
+            <p>Лицевую можно отправить всем одну и ту же. Пропуск отправьте каждому гостю лично — в Telegram или WhatsApp.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <form id="form">
+      <div class="fields">
+        <label>Дата и время
+          <input id="when" name="when" placeholder="12 октября, 15:00" autocomplete="off">
+        </label>
+        <label>Именинник
+          <input id="name" name="name" placeholder="Маша" autocomplete="off">
+        </label>
+        <label class="wide">Кого зовём
+          <textarea id="guests" name="guests" placeholder="Иван Петров&#10;Анна Смирнова&#10;Петя"></textarea>
+          <span class="count" id="count">Гостей пока нет. Каждое имя — с новой строки.</span>
+        </label>
+      </div>
+      <div class="actions">
+        <button type="submit" id="build">Сделать приглашения</button>
+      </div>
+    </form>
+    <p class="status" id="status"></p>
+
+    <div id="results" hidden>
+      <p class="done-note" id="done-note"></p>
+      <div class="actions">
+        <button type="button" id="save-all">Скачать все картинки</button>
+      </div>
+      <div class="preview-title">Лицевая — одна на всех</div>
+      <div class="frame" id="frame-cover">
+        <div class="cover" id="card-cover">
+          <div class="stage">
+            <div class="shell">
+              <div class="bg"></div>
+              <div class="noise"></div>
+              <div class="content">
+                <img class="logo" src="logo.png" alt="Контр-Страйк">
+                <div class="rule"></div>
+                <div class="lockup">
+                  <h1>Приглашение</h1>
+                  <p class="hand">круто отметить</p>
+                  <h2>День рождения</h2>
+                  <p class="person" id="cover-name"></p>
+                </div>
+                <div class="badges">
+                  <div class="badge">кидбол</div>
+                  <div class="badge">лазертаг</div>
+                  <div class="badge">гидробол</div>
+                </div>
+                <div class="where" id="cover-where">Петрозаводск · ул. Балтийская, 14, ангар 16</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="button" class="ghost" id="save-cover">Скачать лицевую</button>
+      </div>
+      <div id="passes"></div>
+    </div>
+  </div>
+
+  <template id="pass-tpl">
+    <article class="guest-card">
+      <div class="guest-head">
+        <div class="preview-title"></div>
+        <button type="button" class="ghost save-pass">Скачать этот пропуск</button>
+      </div>
+      <div class="frame">
+        <div class="v2">
+          <div class="stage">
+            <div class="shell">
+              <section class="main">
+                <div class="bg"></div>
+                <div class="noise"></div>
+                <div class="content">
+                  <div class="brand"><img class="logo" src="logo.png" alt="Контр-Страйк"></div>
+                  <div class="pass-lockup">
+                    <h1>Приглашение</h1>
+                    <p class="hand">круто отметить</p>
+                    <h2>День рождения</h2>
+                  </div>
+                  <div class="badges">
+                    <div class="badge">кидбол</div>
+                    <div class="badge">лазертаг</div>
+                    <div class="badge">гидробол</div>
+                  </div>
+                  <div class="rows">
+                    <div class="row">
+                      <div class="label">именинник</div>
+                      <div class="bar"><span class="fill fill-name"></span></div>
+                    </div>
+                    <div class="row">
+                      <div class="label">кого зовём</div>
+                      <div class="bar"><span class="fill fill-guest"></span></div>
+                    </div>
+                    <div class="row">
+                      <div class="label">когда играем</div>
+                      <div class="bar"><span class="fill fill-when"></span></div>
+                    </div>
+                  </div>
+                  <div class="mini-contacts">
+                    <span>cs10.ru</span>
+                    <span>+7 911 400 60 64</span>
+                    <span>vk · club1727944</span>
+                  </div>
+                </div>
+              </section>
+              <div class="perf" aria-hidden="true"></div>
+              <aside class="stub">
+                <div class="bg" style="background-position:80% center;"></div>
+                <div class="noise"></div>
+                <div class="content">
+                  <div>
+                    <div class="pass-kicker">отрывной купон</div>
+                    <div class="pass-title">ПРОПУСК</div>
+                  </div>
+                  <div>
+                    <div class="qrbox"><img src="qr.png" alt="Маршрут до клуба в 2ГИС"></div>
+                    <div class="pass-cap">СКАНИРУЙ<span>маршрут в 2ГИС</span></div>
+                  </div>
+                  <div class="pass-meta">ул. Балтийская, 14<small>ангар 16 · Петрозаводск</small></div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="html2canvas.min.js"></script>
+  <script src="jszip.min.js"></script>
+  <script>
+    const nameEl = document.getElementById("name");
+    const whenEl = document.getElementById("when");
+    const guestsEl = document.getElementById("guests");
+    const statusEl = document.getElementById("status");
+    const countEl = document.getElementById("count");
+    const resultsEl = document.getElementById("results");
+    const passesEl = document.getElementById("passes");
+    const buildBtn = document.getElementById("build");
+    const tpl = document.getElementById("pass-tpl");
+    let cards = [];
+
+    function parseGuests(raw) {
+      return raw.split(/\n/).map(function (line) {
+        return line.trim().replace(/\s+/g, " ");
+      }).filter(Boolean);
+    }
+
+    function remember() {
+      localStorage.setItem("invite-name", nameEl.value);
+      localStorage.setItem("invite-when", whenEl.value);
+      localStorage.setItem("invite-guests", guestsEl.value);
+    }
+
+    function guestCountText(n) {
+      const mod10 = n % 10;
+      const mod100 = n % 100;
+      let word = "гостей";
+      if (mod10 === 1 && mod100 !== 11) word = "гость";
+      else if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) word = "гостя";
+      return "Гостей: " + n + " " + word + ". Каждое имя — с новой строки.";
+    }
+
+    function refreshCount() {
+      const n = parseGuests(guestsEl.value).length;
+      countEl.textContent = n
+        ? guestCountText(n)
+        : "Гостей пока нет. Каждое имя — с новой строки.";
+    }
+
+    function fitFill(el) {
+      let size = 28;
+      el.style.fontSize = size + "px";
+      const bar = el.closest(".bar");
+      const max = bar.clientWidth - 90;
+      while (el.scrollWidth > max && size > 14) {
+        size -= 1;
+        el.style.fontSize = size + "px";
+      }
+    }
+
+    function paintCover(name, when) {
+      const person = document.getElementById("cover-name");
+      const where = document.getElementById("cover-where");
+      person.textContent = name;
+      person.style.fontSize = name.length > 18 ? "32px" : "42px";
+      const place = when
+        ? "Петрозаводск · " + when + " · ул. Балтийская, 14, ангар 16"
+        : "Петрозаводск · ул. Балтийская, 14, ангар 16";
+      where.textContent = place;
+      where.style.fontSize = place.length > 58 ? "20px" : "26px";
+      where.style.letterSpacing = place.length > 58 ? "0.04em" : "0.1em";
+    }
+
+    function fit() {
+      document.querySelectorAll(".frame").forEach(function (frame) {
+        const stage = frame.querySelector(".stage");
+        if (!stage || frame.clientWidth === 0) return;
+        const scale = frame.clientWidth / 1920;
+        stage.style.transform = "scale(" + scale + ")";
+        frame.style.height = Math.ceil(880 * scale) + "px";
+      });
+    }
+
+    function safeName(value) {
+      return value.replace(/[\\/:*?"<>|]/g, " ").replace(/\s+/g, " ").trim() || "гость";
+    }
+
+    function downloadBlob(blob, filename) {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(function () { URL.revokeObjectURL(link.href); }, 8000);
+    }
+
+    async function renderStage(stage) {
+      const prev = stage.style.transform;
+      stage.style.transform = "none";
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+      const canvas = await html2canvas(stage, {
+        scale: 2,
+        backgroundColor: "#000000",
+        useCORS: true,
+        width: 1920,
+        height: 880
+      });
+      stage.style.transform = prev;
+      return await new Promise(function (resolve) { canvas.toBlob(resolve, "image/png"); });
+    }
+
+    function buildPasses(name, when, guests) {
+      passesEl.replaceChildren();
+      cards = [];
+      const used = {};
+      guests.forEach(function (guest, index) {
+        const node = tpl.content.firstElementChild.cloneNode(true);
+        node.querySelector(".preview-title").textContent = "Пропуск — " + guest;
+        node.querySelector(".fill-name").textContent = name;
+        node.querySelector(".fill-guest").textContent = guest;
+        node.querySelector(".fill-when").textContent = when;
+        const base = "Пропуск — " + safeName(guest) + ".png";
+        used[base] = (used[base] || 0) + 1;
+        const filename = used[base] === 1 ? base : base.replace(/\.png$/, " " + used[base] + ".png");
+        node.querySelector(".save-pass").addEventListener("click", async function () {
+          statusEl.textContent = "Сохраняю пропуск для " + guest + "…";
+          const blob = await renderStage(node.querySelector(".stage"));
+          downloadBlob(blob, filename);
+          statusEl.textContent = "Пропуск для " + guest + " скачан.";
+        });
+        passesEl.appendChild(node);
+        cards.push({ guest: guest, filename: filename, stage: node.querySelector(".stage"), index: index });
+      });
+    }
+
+    function showResults(name, guests) {
+      document.getElementById("done-note").textContent =
+        "Готово: лицевая сторона и " + guests.length + " " + (guests.length % 10 === 1 && guests.length % 100 !== 11 ? "пропуск" : (guests.length % 10 >= 2 && guests.length % 10 <= 4 && (guests.length % 100 < 12 || guests.length % 100 > 14) ? "пропуска" : "пропусков")) +
+        " — по одному на каждого гостя. Лицевую отправьте всем, пропуск — каждому свой.";
+      resultsEl.hidden = false;
+      requestAnimationFrame(function () {
+        fit();
+        cards.forEach(function (card) {
+          card.stage.querySelectorAll(".fill").forEach(fitFill);
+        });
+        resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+
+    document.getElementById("form").addEventListener("input", function () {
+      remember();
+      refreshCount();
+    });
+
+    document.getElementById("form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const name = nameEl.value.trim();
+      const when = whenEl.value.trim();
+      const guests = parseGuests(guestsEl.value);
+      remember();
+      if (!when || !name || !guests.length) {
+        statusEl.textContent = "Нужны дата, имя именинника и хотя бы один гость.";
+        return;
+      }
+      if (guests.length > 40) {
+        statusEl.textContent = "За один раз можно сделать не больше 40 пропусков.";
+        return;
+      }
+      paintCover(name, when);
+      buildPasses(name, when, guests);
+      showResults(name, guests);
+      statusEl.textContent = "";
+    });
+
+    document.getElementById("save-cover").addEventListener("click", async function () {
+      const name = nameEl.value.trim() || "именинник";
+      statusEl.textContent = "Сохраняю лицевую…";
+      const blob = await renderStage(document.querySelector("#card-cover .stage"));
+      downloadBlob(blob, "Лицевая — " + safeName(name) + ".png");
+      statusEl.textContent = "Лицевая скачана. Её можно отправить всем гостям.";
+    });
+
+    document.getElementById("save-all").addEventListener("click", async function () {
+      if (!cards.length || typeof JSZip === "undefined") {
+        statusEl.textContent = "Сначала сделайте приглашения.";
+        return;
+      }
+      buildBtn.disabled = true;
+      document.getElementById("save-all").disabled = true;
+      const zip = new JSZip();
+      statusEl.textContent = "Собираю лицевую…";
+      const coverBlob = await renderStage(document.querySelector("#card-cover .stage"));
+      zip.file("Лицевая — " + safeName(nameEl.value.trim() || "именинник") + ".png", coverBlob);
+      for (let i = 0; i < cards.length; i++) {
+        statusEl.textContent = "Собираю пропуск " + (i + 1) + " из " + cards.length + "…";
+        const blob = await renderStage(cards[i].stage);
+        zip.file(cards[i].filename, blob);
+      }
+      statusEl.textContent = "Упаковываю архив…";
+      const packed = await zip.generateAsync({ type: "blob" });
+      downloadBlob(packed, "Приглашения — " + safeName(nameEl.value.trim() || "день рождения") + ".zip");
+      statusEl.textContent = "Архив скачан: лицевая и пропуск на каждого гостя.";
+      buildBtn.disabled = false;
+      document.getElementById("save-all").disabled = false;
+    });
+
+    window.addEventListener("resize", fit);
+    nameEl.value = localStorage.getItem("invite-name") || "";
+    whenEl.value = localStorage.getItem("invite-when") || "";
+    guestsEl.value = localStorage.getItem("invite-guests") || "";
+    refreshCount();
+  </script>
+</body>
+</html>
